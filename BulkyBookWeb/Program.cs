@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.DataAccess.Repository;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +15,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddRazorPages();
+//builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
