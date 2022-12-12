@@ -2,7 +2,7 @@
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
 using BulkyBook.Models.ViewModels;
-
+using BulkyBook.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,9 +15,9 @@ using System.Linq;
 
 namespace BulkyBookWeb.Controllers;
 
-    [Area("Admin")]
-    
-    public class ProductController : Controller
+[Area("Admin")]
+[Authorize(Roles = SD.Role_Admin)]
+public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _hostEnvironment;
